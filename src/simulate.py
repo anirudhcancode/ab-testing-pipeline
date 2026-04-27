@@ -11,9 +11,14 @@ DB_HOST = "localhost"
 DB_PORT = "5432"
 DB_NAME = "fraud_db"
 
-engine = create_engine(
-    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+import os
+
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://fraud_user:fraud_pass@localhost:5432/fraud_db"
 )
+
+engine = create_engine(DATABASE_URL)
 
 # Experiment configuration
 EXPERIMENT = {

@@ -7,15 +7,14 @@ from statsmodels.stats.proportion import proportions_ztest, proportion_confint
 import warnings
 warnings.filterwarnings("ignore")
 
-DB_USER = "fraud_user"
-DB_PASSWORD = "fraud_pass"
-DB_HOST = "localhost"
-DB_PORT = "5432"
-DB_NAME = "fraud_db"
+import os
 
-engine = create_engine(
-    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://fraud_user:fraud_pass@localhost:5432/fraud_db"
 )
+
+engine = create_engine(DATABASE_URL)
 
 app = FastAPI(
     title="A/B Testing Analytics API",
